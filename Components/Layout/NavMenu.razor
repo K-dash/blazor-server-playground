@@ -1,36 +1,29 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">blazor-playground</a>
-    </div>
-</div>
+﻿<RadzenLayout>
+    <RadzenHeader>
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0">
+            <RadzenSidebarToggle Click="@(() => sidebarExpanded = !sidebarExpanded)" />
+            <RadzenLabel Text="blazor-playground" />
+        </RadzenStack>
+    </RadzenHeader>
 
-<input type="checkbox" title="Navigation menu" class="navbar-toggler" />
+    <RadzenStack Orientation="Orientation.Vertical">
+        <RadzenSidebar @bind-Expanded="@sidebarExpanded">
+            <RadzenPanelMenu>
+                <RadzenPanelMenuItem Text="Home" Icon="home" Path="" />
+                <RadzenPanelMenuItem Text="Counter" Icon="add_box" Path="counter" />
+                <RadzenPanelMenuItem Text="Weather" Icon="list" Path="weather" />
+                <RadzenPanelMenuItem Text="BizA" Icon="list" Path="biza/editauthor/123" />
+            </RadzenPanelMenu>
+        </RadzenSidebar>
+    </RadzenStack>
 
-<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
+    @* <RadzenBody>
+        <RadzenContentContainer Name="main">
+            @Body
+        </RadzenContentContainer>
+    </RadzenBody> *@
+</RadzenLayout>
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Counter
-            </NavLink>
-        </div>
-
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="weather">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Weather
-            </NavLink>
-        </div>
-
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="biza/editauthor/123">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> BizA
-            </NavLink>
-        </div>
-    </nav>
-</div>
-
+@code {
+    bool sidebarExpanded = true;
+}
