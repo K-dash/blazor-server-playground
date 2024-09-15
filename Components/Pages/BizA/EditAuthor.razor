@@ -1,0 +1,87 @@
+@page "/biza/editauthor/{AuthorId}"
+@inject ILogger<EditAuthor> logger
+
+<h3>著者データの更新</h3>
+
+<EditForm Model="@vm" OnValidSubmit="@btnSubmit_OnClick">
+    <DataAnnotationsValidator />
+
+    <dl>
+        <dt>著者ID</dt><dd>@vm.AuthorId</dd>
+        <dt>著者名(名)</dt><dd><InputText @bind-Value="vm.AuthorFirstName" /></dd>
+        <dt>著者名(性)</dt><dd><InputText @bind-Value="vm.AuthorLastName" /></dd>
+        <dt>電話番号</dt><dd><InputText @bind-Value="vm.Phone" /></dd>
+        <dt>プラン</dt>
+            <dd>
+                <InputSelect @bind-Value="vm.SelectedPlanKey">
+                    @foreach (var person in vm.personSelectList) {
+                        <option value="@person.Id">@person.Name</option>
+                    }
+                </InputSelect>
+                <p>@vm.SelectedPlanKey</p>
+            </dd>
+    </dl>
+    
+    <h4>家族情報</h4>
+    @foreach (var family in vm.FamilyMembers)
+    {
+        <div>
+            <InputText @bind-Value="family.Name" />
+            <!-- 他の家族情報の入力フィールド -->
+        </div>
+        <p>@family.Name</p>
+    }
+    <button type="button" @onclick="AddFamilyMember">家族を追加</button>
+    
+    <ValidationSummary />
+
+    <button type="submit">更新</button>
+    <button type="button" @onclick="btnCancel_OnClick">キャンセル</button>
+
+</EditForm>
+
+@code {
+    [Parameter]
+    public string? AuthorId { get; set; } = null;
+
+    private EditAuthorViewModel vm = new();
+
+    [Inject]
+    private NavigationManager NavigationManager { get; set; } = null!;
+    protected override void OnInitialized()
+    {
+        List<Person> _personSelectList = new()
+        {
+            new(){Id="0",Name="放浪 軍師", Profession="エンジニア", Remarks="最近ブログ更新さぼっててごめんなさい"},
+            new(){Id="1",Name="夏狂 乱", Profession="抽選アプリケーション", Remarks="AIではない方法で人格を持たせる事を目指すアプリ"},
+            new(){Id="2",Name="漆原 鎌足", Profession="退魔師", Remarks="清楚カメラめちゃ便利なのでもうちょっと有名になっていい！"},
+            new(){Id="3",Name="鮫月かこい", Profession="妖精", Remarks="生きているだけで偉いと褒めてもらおう！"},
+            new(){Id="4",Name="遥ノ音ハル", Profession="弾き語り", Remarks="エモい弾き語り配信は必見！"},
+        };
+        // DBから著者情報を取得
+        vm = new EditAuthorViewModel() {
+            AuthorId = this.AuthorId ?? string.Empty,
+            AuthorFirstName = "hoge",
+            AuthorLastName = "fuga",
+            Phone = "123-456-7890",
+            personSelectList = _personSelectList,
+            SelectedPlanKey = _personSelectList.Last().Id
+        };
+        logger.LogInformation(vm.Phone);
+    }
+    
+    private void btnSubmit_OnClick()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+    
+    private void btnCancel_OnClick()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+    
+    private void AddFamilyMember()
+    {
+        vm.FamilyMembers.Add(new FamilyMember());
+    }
+}

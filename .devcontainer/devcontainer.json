@@ -1,0 +1,27 @@
+{
+    "name": "C# (.NET)",
+    "image": "mcr.microsoft.com/devcontainers/dotnet:1-8.0-bookworm",
+
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-azuretools.vscode-docker",
+                "ms-dotnettools.csharp",
+                "ms-dotnettools.csdevkit",
+                "ms-dotnettools.vscodeintellicode-csharp",
+                "adrianwilczynski.blazor-snippet-pack",
+                "oderwat.indent-rainbow",
+                "esbenp.prettier-vscode",
+                "VisualStudioExptTeam.vscodeintellicode",
+                "christian-kohler.path-intellisense",
+                "formulahendry.auto-rename-tag",
+                "shardulm94.trailing-spaces",
+                "eamodio.gitlens",
+                "ecmel.vscode-html-css",
+                "Zignd.html-css-class-completion",
+                "Codeium.codeium",
+                "jmrog.vscode-nuget-package-manager",
+            ]
+        }
+    }
+}
