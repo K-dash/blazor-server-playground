@@ -1,5 +1,7 @@
 @page "/biza/editauthor/{AuthorId}"
 @inject ILogger<EditAuthor> logger
+@inject Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage.ProtectedSessionStorage storage
+@inject Radzen.DialogService DialogService
 
 <h3>著者データの更新</h3>
 
@@ -8,7 +10,7 @@
 
     <dl>
         <dt>著者ID</dt><dd>@vm.AuthorId</dd>
-        <dt>著者名(名)</dt><dd><InputText @bind-Value="vm.AuthorFirstName" /></dd>
+        <dt>著者名(名)</dt><dd><InputText @bind-Value="vm.AuthorFirstName" @oninput="@(() => hasChanges = true)"/></dd>
         <dt>著者名(性)</dt><dd><InputText @bind-Value="vm.AuthorLastName" /></dd>
         <dt>電話番号</dt><dd><InputText @bind-Value="vm.Phone" /></dd>
         <dt>プラン</dt>
@@ -40,10 +42,13 @@
 
 </EditForm>
 
+<NavigationLock ConfirmExternalNavigation="@hasChanges" OnBeforeInternalNavigation="OnBeforeInternalNavigation" />
+
 @code {
     [Parameter]
     public string? AuthorId { get; set; } = null;
 
+    private bool hasChanges = false;
     private EditAuthorViewModel vm = new();
 
     [Inject]
@@ -83,5 +88,23 @@
     private void AddFamilyMember()
     {
         vm.FamilyMembers.Add(new FamilyMember());
+    }
+
+    private void HandleValidSubmit()
+    {
+        // フォームの保存処理
+        hasChanges = false;
+    }
+
+    private async Task OnBeforeInternalNavigation(LocationChangingContext context)
+    {
+        if (hasChanges)
+        {
+            var result = await DialogService.Confirm("保存していないデータがあります。ページを離れてもよろしいですか？", "確認", new ConfirmOptions() { OkButtonText = "はい", CancelButtonText = "いいえ" });
+            if (result != true)
+            {
+                context.PreventNavigation();
+            }
+        }
     }
 }
