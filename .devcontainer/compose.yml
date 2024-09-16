@@ -1,7 +1,7 @@
 services:
   app:
     build:
-      context: .
+      context: ./app
       dockerfile: Dockerfile
     volumes:
       - ..:/workspaces:cached
@@ -12,21 +12,25 @@ services:
 
 
   db:
-    image: postgres:latest
+    build:
+      context: ./db
+      dockerfile: Dockerfile
     restart: unless-stopped
     volumes:
-      - postgres-data:/var/lib/postgresql/data
+      - mssql-data:/var/opt/mssql
     env_file: .env
     environment:
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_DB: ${POSTGRES_DB}
+      ACCEPT_EULA: Y
+      SA_PASSWORD: ${MSSQL_SA_PASSWORD}
+      MSSQL_PID: Developer
+    ports:
+      - "1433:1433"
     networks:
       - devnetwork
-    init : true
+    init: true
 
 volumes:
-  postgres-data:
+  mssql-data:
 
 networks:
   devnetwork:

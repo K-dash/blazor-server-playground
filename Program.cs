@@ -1,4 +1,6 @@
 using blazor_playground.Components;
+using blazor_playground.Data;
+using Microsoft.EntityFrameworkCore;
 using Radzen;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +11,19 @@ builder.Services.AddRazorComponents()
 
 builder.Services.AddRadzenComponents();
 builder.Services.AddScoped<DialogService>();
+
+// DbContextの登録
+builder.Services.AddDbContextFactory<PubsDbContext>(opt => {
+    if (builder.Environment.IsDevelopment()) {
+        opt = opt.EnableSensitiveDataLogging().EnableDetailedErrors();
+    }
+    opt.UseSqlServer(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        providerOptions => {
+            providerOptions.EnableRetryOnFailure();
+        }
+    );
+});
 
 var app = builder.Build();
 
