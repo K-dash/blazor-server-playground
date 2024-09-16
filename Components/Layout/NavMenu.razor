@@ -1,10 +1,10 @@
 ﻿<RadzenLayout>
-    <RadzenHeader>
+    @* <RadzenHeader>
         <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0">
             <RadzenSidebarToggle Click="@(() => sidebarExpanded = !sidebarExpanded)" />
             <RadzenLabel Text="blazor-playground" />
         </RadzenStack>
-    </RadzenHeader>
+    </RadzenHeader> *@
 
     <RadzenStack Orientation="Orientation.Vertical">
         <RadzenSidebar @bind-Expanded="@sidebarExpanded">
@@ -13,15 +13,11 @@
                 <RadzenPanelMenuItem Text="Counter" Icon="add_box" Path="counter" />
                 <RadzenPanelMenuItem Text="Weather" Icon="list" Path="weather" />
                 <RadzenPanelMenuItem Text="BizA" Icon="list" Path="biza/editauthor/123" />
+                <RadzenPanelMenuItem Text="Sample01" Icon="list" Path="Sample01" />
             </RadzenPanelMenu>
         </RadzenSidebar>
     </RadzenStack>
 
-    @* <RadzenBody>
-        <RadzenContentContainer Name="main">
-            @Body
-        </RadzenContentContainer>
-    </RadzenBody> *@
 </RadzenLayout>
 
 @code {

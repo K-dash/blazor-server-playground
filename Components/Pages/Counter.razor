@@ -3,7 +3,6 @@
 @inject NotificationService NotificationService
 @inject Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage.ProtectedSessionStorage storage
 
-
 <h1>Counter</h1>
 
 @if (currentCount.HasValue) {
@@ -66,6 +65,7 @@
                 ButtonStyle="ButtonStyle.Success"
                 Click=@(args => ShowNotification(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Success Summary", Detail = "Success Detail", Duration = 4000 })) />
         </RadzenCard>
+    using blazor_playground.Components.Models;
     </RadzenColumn>
 </RadzenRow>
 

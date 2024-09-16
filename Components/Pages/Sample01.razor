@@ -1,0 +1,113 @@
+@page "/Sample01"
+@using blazor_playground.Data
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Components.QuickGrid
+
+@*アプリケーションサービス*@
+@inject IDbContextFactory<PubsDbContext> dbContextFactory
+
+@if (authors == null)
+{
+    <div>Loading...</div>
+}
+else
+{
+    <div>
+        <QuickGrid Items="@authors">
+            <PropertyColumn Property="@(a => a.AuthorId)" Title="著者ID" />
+            <PropertyColumn Property="@(a => a.AuthorFirstName)" Title="著者名(名)" />
+            <PropertyColumn Property="@(a => a.AuthorLastName)" Title="著者名(性)" />
+            <PropertyColumn Property="@(a => a.Phone)" Title="電話番号" />
+            <PropertyColumn Property="@(a => a.State)" Title="州" />
+            <PropertyColumn Property="@(a => a.Contract)" Title="契約有無" />
+        </QuickGrid>
+    </div>
+    
+    <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="5" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
+        Data="@authors" ColumnWidth="300px" LogicalFilterOperator="LogicalFilterOperator.Or" SelectionMode="DataGridSelectionMode.Single" @bind-Value=@selectedAuthors>
+        <Columns>
+            <RadzenDataGridColumn Property="@nameof(Author.AuthorId)" Filterable="false" Title="ID" Frozen="true" Width="80px" TextAlign="TextAlign.Center" />
+            <RadzenDataGridColumn Property="@nameof(Author.AuthorFirstName)" Title="First Name" Frozen="true" Width="160px" />
+            <RadzenDataGridColumn Property="@nameof(Author.AuthorLastName)" Title="Last Name" Width="160px"/>
+            <RadzenDataGridColumn Property="@nameof(Author.Phone)" Title="Phone" Width="200px" />
+            <RadzenDataGridColumn Property="@nameof(Author.State)" Title="State" Width="120px" />
+            <RadzenDataGridColumn Property="@nameof(Author.Contract)" Title="Contract" FormatString="{0:d}" Width="160px" />
+        </Columns>
+    </RadzenDataGrid>
+    <p>@selectedAuthors</p>
+    
+    <RadzenButton Click="GetAuthors" Text="Click me" class="rz-ripple" />
+    if (authors2 != null) {
+        <p>@authors2.AuthorId</p>
+    }
+    <RadzenButton Click="GetOverView" Text="Click OverView" class="rz-ripple" />
+    if (authorViews != null) {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>AuthorId</th>
+                    <th>AuthorNmae</th>
+                    <th>Phone</th>
+                    <th>State</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var view in authorViews)
+                {
+                    <tr>
+                        <td>@view.AuthorId</td>
+                        <td>@view.AuthorName</td>
+                        <td>@view.Phone</td>
+                        <td>@view.State</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+}
+
+
+@code {
+    // データバインド用変数
+    private IQueryable<Author>? authors = null;
+    private IList<Author>? selectedAuthors;
+        
+    private Author? authors2 = null;
+    
+    private List<AuthorOverView>? authorViews = null;
+    
+    // ページ初期化時に呼び出されるイベントハンドラ
+    protected override async Task OnInitializedAsync()
+    {
+        await using (var pubs = await dbContextFactory.CreateDbContextAsync()) {
+            authors = (await pubs.Authors.ToListAsync()).AsQueryable();
+        }
+        selectedAuthors = new List<Author>(){ authors.FirstOrDefault() ?? new Author() };
+    }
+    
+    private async Task GetAuthors()
+    {
+        await using (var pubs = await dbContextFactory.CreateDbContextAsync()) {
+            var query2 = pubs.Authors
+                        .Where(a => a.AuthorId == "172-32-1176")
+                        .Select(a => a);
+            authors2 = query2.FirstOrDefault();
+        }
+    }
+    
+    // 射影
+    private async Task GetOverView()
+    {
+        await using (var pubs = await dbContextFactory.CreateDbContextAsync()) {
+            var query = pubs.Authors
+                        .Where(a => a.State == "CA")
+                        .Select(a => new AuthorOverView() {
+                            AuthorId = a.AuthorId,
+                            AuthorName = a.AuthorFirstName + " " + a.AuthorLastName,
+                            Phone = a.Phone,
+                            State = a.State,
+                        });
+            authorViews = await query.ToListAsync();
+        }
+    }
+}
