@@ -1,6 +1,8 @@
 {
-    "name": "C# (.NET)",
-    "image": "mcr.microsoft.com/devcontainers/dotnet:1-8.0-bookworm",
+    "name": "C# (.NET) with PostgreSQL",
+    "dockerComposeFile": "./compose.yml",
+    "service": "app",
+    "workspaceFolder": "/workspaces",
 
     "customizations": {
         "vscode": {
@@ -21,7 +23,18 @@
                 "Zignd.html-css-class-completion",
                 "Codeium.codeium",
                 "jmrog.vscode-nuget-package-manager",
+                "ckolkman.vscode-postgres"
             ]
         }
-    }
+    },
+
+    "features": {
+        "docker-from-docker": {
+            "version": "latest"
+        }
+    },
+
+    "forwardPorts": [5000, 5001, 5432],
+
+    "postCreateCommand": "dotnet restore"
 }
