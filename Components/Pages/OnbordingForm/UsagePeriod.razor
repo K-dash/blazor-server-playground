@@ -1,0 +1,18 @@
+<div class="mt-3">
+    <div class="mb-3">
+        <RadzenLabel Text="利用開始日" />
+        <RadzenDatePicker @bind-Value="@Customer.StartDate" Class="w-100" DateFormat="yyyy/MM/dd" />
+    </div>
+    <div class="mb-3">
+        <RadzenLabel Text="利用終了日" />
+        <RadzenDatePicker @bind-Value="@Customer.EndDate" Class="w-100" DateFormat="yyyy/MM/dd" />
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public CustomerInfo Customer { get; set; }
+
+    [Parameter]
+    public EventCallback<CustomerInfo> CustomerChanged { get; set; }
+}

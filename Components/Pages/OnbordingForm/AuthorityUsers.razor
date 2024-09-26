@@ -1,0 +1,103 @@
+@implements IDisposable
+
+<div class="mt-3">
+    <div class="d-flex justify-content-center mb-4">
+        <RadzenButton Icon="add_circle_outline" Click="@AddUser" Style="background-color: #337AB7; color: white;" />
+    </div>
+
+    @for (int i = 0; i < Customer.authorityUsers.Count; i++)
+    {
+        var index = i;
+        <div class="row mb-3 align-items-center">
+            <div class="col-md-9">
+                <RadzenTextBox Value="@Customer.authorityUsers[index]" ValueChanged="@(value => UpdateUser(index, value))" Placeholder="ユーザー名を入力" Class="w-100" />
+            </div>
+            <div class="col-md-2 text-end">
+                <RadzenButton Style="background-color: #ff4d4d; color: white;" Icon="delete" Click="@(() => RemoveUser(index))" />
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public CustomerInfo Customer { get; set; }
+
+    [Parameter]
+    public EventCallback<CustomerInfo> CustomerChanged { get; set; }
+
+    private string previousFullName;
+
+    protected override void OnInitialized()
+    {
+        if (Customer.authorityUsers == null)
+        {
+            Customer.authorityUsers = new List<string>();
+        }
+
+        if (Customer.authorityUsers.Count == 0)
+        {
+            Customer.authorityUsers.Add(Customer.FullName ?? string.Empty);
+        }
+
+        previousFullName = Customer.FullName;
+    }
+
+    protected override void OnParametersSet()
+    {
+        if (Customer.FullName != previousFullName)
+        {
+            UpdateAuthorityUserWithFullName();
+            previousFullName = Customer.FullName;
+        }
+    }
+
+    private void UpdateAuthorityUserWithFullName()
+    {
+        if (!string.IsNullOrWhiteSpace(Customer.FullName))
+        {
+            if (Customer.authorityUsers.Count == 0)
+            {
+                Customer.authorityUsers.Add(Customer.FullName);
+            }
+            else if (string.IsNullOrWhiteSpace(Customer.authorityUsers[0]))
+            {
+                Customer.authorityUsers[0] = Customer.FullName;
+            }
+            CustomerChanged.InvokeAsync(Customer);
+        }
+    }
+
+    private void AddUser()
+    {
+        Customer.authorityUsers.Add(string.Empty);
+        CustomerChanged.InvokeAsync(Customer);
+    }
+
+    private void UpdateUser(int index, string value)
+    {
+        if (index >= 0 && index < Customer.authorityUsers.Count)
+        {
+            Customer.authorityUsers[index] = value;
+            CustomerChanged.InvokeAsync(Customer);
+        }
+    }
+
+    private void RemoveUser(int index)
+    {
+        if (index >= 0 && index < Customer.authorityUsers.Count)
+        {
+            Customer.authorityUsers.RemoveAt(index);
+            if (Customer.authorityUsers.Count == 0)
+            {
+                Customer.authorityUsers.Add(string.Empty);
+            }
+            CustomerChanged.InvokeAsync(Customer);
+        }
+    }
+
+    public void Dispose()
+    {
+        // 必要に応じてリソースのクリーンアップを行う
+    }
+}

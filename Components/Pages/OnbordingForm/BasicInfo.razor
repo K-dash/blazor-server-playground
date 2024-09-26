@@ -1,0 +1,22 @@
+<div class="mt-3">
+    <div class="mb-3">
+        <RadzenLabel Text="会社名" />
+        <RadzenTextBox @bind-Value="@Customer.CompanyName" Class="w-100" />
+    </div>
+    <div class="mb-3">
+        <RadzenLabel Text="氏名" />
+        <RadzenTextBox @bind-Value="@Customer.FullName" Class="w-100" />
+    </div>
+    <div class="mb-3">
+        <RadzenLabel Text="利用人数" />
+        <RadzenNumeric @bind-Value="@Customer.NumberOfUsers" Class="w-100" />
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public CustomerInfo Customer { get; set; }
+
+    [Parameter]
+    public EventCallback<CustomerInfo> CustomerChanged { get; set; }
+}
