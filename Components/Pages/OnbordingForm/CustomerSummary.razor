@@ -1,0 +1,28 @@
+<RadzenCard Class="mt-4">
+    <h3>入力情報サマリー</h3>
+    <p>会社名: @Customer.CompanyName</p>
+    <p>氏名: @Customer.FullName</p>
+    <p>利用人数: @Customer.NumberOfUsers</p>
+    <p>利用開始日: @Customer.StartDate?.ToString("yyyy/MM/dd")</p>
+    <p>利用終了日: @Customer.EndDate?.ToString("yyyy/MM/dd")</p>
+    <p>権限ユーザー:</p>
+    <ul>
+        @foreach (var user in Customer.authorityUsers)
+        {
+            <li>@user</li>
+        }
+    </ul>
+    <p>プラン: @Customer.Plan</p>
+    <p>テスト:</p>
+    <ul>
+        @foreach (var user in Customer.AdvertisingFormats)
+        {
+            <li>@user</li>
+        }
+    </ul>
+</RadzenCard>
+
+@code {
+    [Parameter]
+    public CustomerInfo Customer { get; set; }
+}

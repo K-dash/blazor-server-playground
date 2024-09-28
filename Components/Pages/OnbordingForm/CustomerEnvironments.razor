@@ -1,0 +1,46 @@
+<RadzenFieldset Text="基本情報">
+    <RadzenStack Gap="2rem" class="rz-p-4 rz-p-md-4">
+        <RadzenRow AlignItems="AlignItems.Center" RowGap="2rem" Gap="1rem">
+            <RadzenColumn Size="12" SizeMD="10" Offset="1" OffsetMD="1">
+                <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">会社名</RadzenText>
+                <RadzenTextBox Name="CompanyName" @bind-Value="@Customer.CompanyName" Class="w-100" />
+                <ValidationMessage For="@(() => Customer.CompanyName)" />
+            </RadzenColumn>
+            <RadzenColumn Size="12" SizeMD="10" Offset="1" OffsetMD="1">
+                <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">担当者名</RadzenText>
+                <RadzenTextBox ame="FullName" @bind-Value="@Customer.FullName" Class="w-100" />
+                <ValidationMessage For="@(() => Customer.FullName)" />
+            </RadzenColumn>
+            <RadzenColumn Size="12" SizeMD="10" Offset="1" OffsetMD="1">
+                <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">利用人数</RadzenText>
+                <RadzenTextBox Name="NumberOfUsers" @bind-Value="@Customer.NumberOfUsers" Class="w-100" />
+                <ValidationMessage For="@(() => Customer.NumberOfUsers)" />
+            </RadzenColumn>
+            <RadzenColumn Size="12" SizeMD="10" Offset="1" OffsetMD="1">
+                <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">プラン</RadzenText>
+                <RadzenDropDown @bind-Value="@Customer.Plan" TValue="string" Data="@PlanOptions" Class="w-100" />
+                <ValidationMessage For="@(() => Customer.Plan)" />
+            </RadzenColumn>
+            <RadzenColumn Size="12" SizeMD="10" Offset="1" OffsetMD="1">
+                <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">利用開始日</RadzenText>
+                <RadzenDatePicker @bind-Value="@Customer.StartDate" Class="w-100" DateFormat="yyyy/MM/dd" />
+                <ValidationMessage For="@(() => Customer.StartDate)" />
+            </RadzenColumn>
+            <RadzenColumn Size="12" SizeMD="10" Offset="1" OffsetMD="1">
+                <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">利用終了日</RadzenText>
+                <RadzenDatePicker @bind-Value="@Customer.EndDate" Class="w-100" DateFormat="yyyy/MM/dd" />
+                <ValidationMessage For="@(() => Customer.EndDate)" />
+            </RadzenColumn>
+        </RadzenRow>
+    </RadzenStack>
+</RadzenFieldset>
+
+@code {
+    [Parameter]
+    public CustomerInfo Customer { get; set; }
+
+    [Parameter]
+    public EventCallback<CustomerInfo> CustomerChanged { get; set; }
+
+    List<string> PlanOptions = new List<string>() { "Free", "Basic", "Pro" };
+}

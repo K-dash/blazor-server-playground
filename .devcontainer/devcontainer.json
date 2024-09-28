@@ -21,9 +21,10 @@
                 "eamodio.gitlens",
                 "ecmel.vscode-html-css",
                 "Zignd.html-css-class-completion",
-                "Codeium.codeium",
                 "jmrog.vscode-nuget-package-manager",
-                "ms-mssql.mssql"
+                "ms-mssql.mssql",
+                "Continue.continue",
+                "saoudrizwan.claude-dev"
             ]
         }
     },

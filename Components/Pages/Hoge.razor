@@ -1,0 +1,104 @@
+@page "/hoge"
+@using System
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h1 class="text-center mb-4">顧客オンボーディングフォーム</h1>
+
+            <RadzenAccordion>
+                <Items>
+                    <RadzenAccordionItem Text="基本情報" Icon="business" Selected="true">
+                        <div class="mt-3">
+                            <div class="mb-3">
+                                <RadzenLabel Text="会社名" />
+                                <RadzenTextBox @bind-Value="@customer.CompanyName" Class="w-100" />
+                            </div>
+                            <div class="mb-3">
+                                <RadzenLabel Text="氏名" />
+                                <RadzenTextBox @bind-Value="@customer.FullName" Class="w-100" />
+                            </div>
+                            <div class="mb-3">
+                                <RadzenLabel Text="利用人数" />
+                                <RadzenNumeric @bind-Value="@customer.NumberOfUsers" Class="w-100" />
+                            </div>
+                        </div>
+                    </RadzenAccordionItem>
+
+                    <RadzenAccordionItem Text="利用期間" Icon="date_range">
+                        <div class="mt-3">
+                            <div class="mb-3">
+                                <RadzenLabel Text="利用開始日" />
+                                <RadzenDatePicker @bind-Value="@customer.StartDate" Class="w-100" DateFormat="yyyy/MM/dd" />
+                            </div>
+                            <div class="mb-3">
+                                <RadzenLabel Text="利用終了日" />
+                                <RadzenDatePicker @bind-Value="@customer.EndDate" Class="w-100" DateFormat="yyyy/MM/dd" />
+                            </div>
+                        </div>
+                    </RadzenAccordionItem>
+                </Items>
+            </RadzenAccordion>
+
+            <div class="d-flex justify-content-center mt-4">
+                <RadzenButton Text="保存" Click="@SaveCustomerInfo" Style="background-color: #337AB7; color: white;" />
+            </div>
+
+            @if (showSummary)
+            {
+                <RadzenCard Class="mt-4">
+                    <h3>入力情報サマリー</h3>
+                    <p>会社名: @customer.CompanyName</p>
+                    <p>氏名: @customer.FullName</p>
+                    <p>利用人数: @customer.NumberOfUsers</p>
+                    <p>利用開始日: @customer.StartDate?.ToString("yyyy/MM/dd")</p>
+                    <p>利用終了日: @customer.EndDate?.ToString("yyyy/MM/dd")</p>
+                </RadzenCard>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    private CustomerInfo customer = new CustomerInfo();
+    private bool showSummary = false;
+
+    private class CustomerInfo
+    {
+        public string CompanyName { get; set; }
+        public string FullName { get; set; }
+        public int NumberOfUsers { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
+    }
+
+    private void SaveCustomerInfo()
+    {
+        // ここで顧客情報を保存する処理を実装します
+        // 例: データベースへの保存、API呼び出しなど
+        showSummary = true;
+        // 保存成功のメッセージを表示するなどの処理を追加できます
+    }
+}
+
+<style>
+    .rz-accordion {
+        border: none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 15px;
+        overflow: hidden;
+    }
+    .rz-accordion-header {
+        background-color: #f8f9fa;
+        border-bottom: 1px solid #e9ecef;
+    }
+    .rz-accordion-content {
+        padding: 1rem;
+    }
+    .rz-button {
+        border-radius: 10px;
+    }
+    .rz-textbox, .rz-numeric-text, .rz-datepicker {
+        border-radius: 10px;
+    }
+</style>

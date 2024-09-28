@@ -1,0 +1,22 @@
+@page "/dropdown"
+
+
+<RadzenDropDown TextProperty="Text" ValueProperty="Value"  
+    Multiple="true" class="w-100"  AllowClear="true" 
+    AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+    Data=@data @bind-Value=@multipleValues  />
+
+@code{
+    IEnumerable<byte> multipleValues = new byte[] { 0};
+    public record Option<T>(string Text, T Value);
+
+    public static IList<Option<byte>> BannerType() =>
+          new List<Option<byte>>
+        {
+                new Option<byte>("Banner", 1),
+                new Option<byte>("Textlink", 2)
+        };
+
+
+    IList<Option<byte>> data = BannerType();
+}

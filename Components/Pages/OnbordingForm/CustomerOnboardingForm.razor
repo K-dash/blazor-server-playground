@@ -1,0 +1,85 @@
+@page "/form"
+@using System
+@inject NotificationService NotificationService
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h1 class="text-center mb-4">顧客オンボーディングフォーム</h1>
+
+            <RadzenTemplateForm TItem="CustomerInfo" Data=@customer Submit=@SaveCustomerInfo InvalidSubmit=@OnInvalidSubmit>
+            <DataAnnotationsValidator />
+            <RadzenAccordion>
+                <Items>
+                    <RadzenAccordionItem Text="基本情報" Icon="business" Selected="true">
+                        <BasicInfo @bind-Customer="customer" />
+                    </RadzenAccordionItem>
+
+                    <RadzenAccordionItem Text="利用期間" Icon="date_range">
+                        <UsagePeriod @bind-Customer="customer" />
+                    </RadzenAccordionItem>
+
+                    <RadzenAccordionItem Text="権限ユーザ" Icon="person_add">
+                        <AuthorityUsers @bind-Customer="customer" />
+                    </RadzenAccordionItem>
+                </Items>
+            </RadzenAccordion>
+
+            <div class="d-flex justify-content-center mt-4">
+                <RadzenButton Text="保存" ButtonType="ButtonType.Submit" Style="background-color: #337AB7; color: white;"></RadzenButton>
+            </div>
+            </RadzenTemplateForm>
+
+
+            @if (showSummary)
+            {
+                <CustomerSummary Customer="@customer" />
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    private CustomerInfo customer = new CustomerInfo();
+    private bool showSummary = false;
+
+    private void SaveCustomerInfo()
+    {
+        // ここで顧客情報を保存する処理を実装します
+        // 例: データベースへの保存、API呼び出しなど
+        showSummary = true;
+        // 保存成功のメッセージを表示するなどの処理を追加できます
+        NotificationService.Notify(NotificationSeverity.Info, "成功", "登録が完了しました");
+    }
+    void OnInvalidSubmit(FormInvalidSubmitEventArgs args)
+    {
+        foreach (var error in args.Errors) {
+            NotificationService.Notify(NotificationSeverity.Error, "入力エラー", error);
+        }
+    }
+}
+
+<style>
+    .rz-accordion {
+        border: none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        overflow: hidden;
+        @* width: 800px; /* 任意の幅に設定 */ *@
+        @* margin: 0 auto; /* 中央寄せ */ *@
+    }
+    .rz-accordion-header {
+        background-color: #aba8a8; /* 薄いグレーの色コード */
+        border-bottom: 1px solid #e9ecef;
+        padding: 1rem 1rem; /* 左右の余白を広げる */
+    }
+    .rz-accordion-content {
+        padding: 1rem;
+    }
+    .rz-button {
+        border-radius: 20px;
+    }
+    .rz-textbox, .rz-numeric-text, .rz-datepicker {
+        border-radius: 5px;
+    }
+</style>

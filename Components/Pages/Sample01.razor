@@ -23,17 +23,19 @@ else
         </QuickGrid>
     </div>
     
-    <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="5" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
-        Data="@authors" ColumnWidth="300px" LogicalFilterOperator="LogicalFilterOperator.Or" SelectionMode="DataGridSelectionMode.Single" @bind-Value=@selectedAuthors>
-        <Columns>
-            <RadzenDataGridColumn Property="@nameof(Author.AuthorId)" Filterable="false" Title="ID" Frozen="true" Width="80px" TextAlign="TextAlign.Center" />
-            <RadzenDataGridColumn Property="@nameof(Author.AuthorFirstName)" Title="First Name" Frozen="true" Width="160px" />
-            <RadzenDataGridColumn Property="@nameof(Author.AuthorLastName)" Title="Last Name" Width="160px"/>
-            <RadzenDataGridColumn Property="@nameof(Author.Phone)" Title="Phone" Width="200px" />
-            <RadzenDataGridColumn Property="@nameof(Author.State)" Title="State" Width="120px" />
-            <RadzenDataGridColumn Property="@nameof(Author.Contract)" Title="Contract" FormatString="{0:d}" Width="160px" />
-        </Columns>
-    </RadzenDataGrid>
+        <RadzenCard class="rz-my-12 rz-mx-auto" Style="max-width: 1500px">
+        <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" FilterMode="FilterMode.Advanced" AllowSorting="true" PageSize="5" AllowPaging="true" PagerHorizontalAlign="HorizontalAlign.Left" ShowPagingSummary="true"
+            Data="@authors" ColumnWidth="300px" LogicalFilterOperator="LogicalFilterOperator.Or" SelectionMode="DataGridSelectionMode.Single" @bind-Value=@selectedAuthors>
+            <Columns>
+                <RadzenDataGridColumn Property="@nameof(Author.AuthorId)" Filterable="false" Title="ID" Frozen="true" Width="80px" TextAlign="TextAlign.Center" />
+                <RadzenDataGridColumn Property="@nameof(Author.AuthorFirstName)" Title="First Name" Frozen="true" Width="160px" />
+                <RadzenDataGridColumn Property="@nameof(Author.AuthorLastName)" Title="Last Name" Width="160px"/>
+                <RadzenDataGridColumn Property="@nameof(Author.Phone)" Title="Phone" Width="200px" />
+                <RadzenDataGridColumn Property="@nameof(Author.State)" Title="State" Width="120px" />
+                <RadzenDataGridColumn Property="@nameof(Author.Contract)" Title="Contract" FormatString="{0:d}" Width="160px" />
+            </Columns>
+        </RadzenDataGrid>
+        </RadzenCard>
     <p>@selectedAuthors</p>
     
     <RadzenButton Click="GetAuthors" Text="Click me" class="rz-ripple" />
