@@ -12,6 +12,14 @@
             <li>@user</li>
         }
     </ul>
+    <p>プラン: @Customer.Plan</p>
+    <p>テスト:</p>
+    <ul>
+        @foreach (var user in Customer.AdvertisingFormats)
+        {
+            <li>@user</li>
+        }
+    </ul>
 </RadzenCard>
 
 @code {

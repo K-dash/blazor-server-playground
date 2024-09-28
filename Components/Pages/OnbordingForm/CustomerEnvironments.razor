@@ -1,4 +1,4 @@
-<RadzenFieldset Text="お客様情報">
+<RadzenFieldset Text="基本情報">
     <RadzenStack Gap="2rem" class="rz-p-4 rz-p-md-4">
         <RadzenRow AlignItems="AlignItems.Center" RowGap="2rem" Gap="1rem">
             <RadzenColumn Size="12" SizeMD="10" Offset="1" OffsetMD="1">
@@ -11,18 +11,6 @@
                 <RadzenTextBox ame="FullName" @bind-Value="@Customer.FullName" Class="w-100" />
                 <ValidationMessage For="@(() => Customer.FullName)" />
             </RadzenColumn>
-            <RadzenColumn Size="12" SizeMD="10" Offset="1" OffsetMD="1">
-                <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">メールアドレス</RadzenText>
-                <RadzenTextBox ame="EmailAddress" @bind-Value="@Customer.EmailAddress" Class="w-100" />
-                <ValidationMessage For="@(() => Customer.EmailAddress)" />
-            </RadzenColumn>
-        </RadzenRow>
-    </RadzenStack>
-</RadzenFieldset>
-<br/>
-<RadzenFieldset Text="ご契約内容">
-    <RadzenStack Gap="2rem" class="rz-p-4 rz-p-md-4">
-        <RadzenRow AlignItems="AlignItems.Center" RowGap="2rem" Gap="1rem">
             <RadzenColumn Size="12" SizeMD="10" Offset="1" OffsetMD="1">
                 <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">利用人数</RadzenText>
                 <RadzenTextBox Name="NumberOfUsers" @bind-Value="@Customer.NumberOfUsers" Class="w-100" />
@@ -43,14 +31,6 @@
                 <RadzenDatePicker @bind-Value="@Customer.EndDate" Class="w-100" DateFormat="yyyy/MM/dd" />
                 <ValidationMessage For="@(() => Customer.EndDate)" />
             </RadzenColumn>
-            <RadzenColumn Size="12" SizeMD="10" Offset="1" OffsetMD="1">
-                <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">てすと</RadzenText>
-                <RadzenDropDown TextProperty="Text" ValueProperty="Value" Chips=true
-                                Multiple="true" class="w-100" AllowClear="true"
-                                AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
-                                Data=@advertisingFormatOptions @bind-Value=@Customer.AdvertisingFormats />
-                <ValidationMessage For="@(() => Customer.AdvertisingFormats)" />
-            </RadzenColumn>
         </RadzenRow>
     </RadzenStack>
 </RadzenFieldset>
@@ -63,23 +43,4 @@
     public EventCallback<CustomerInfo> CustomerChanged { get; set; }
 
     List<string> PlanOptions = new List<string>() { "Free", "Basic", "Pro" };
-
-
-    public record Option<T>(string Text, T Value);
-
-    public static IList<Option<string>> AdvertisingFormatOptions() =>
-        new List<Option<string>>
-        {
-            new Option<string>("Banner", "Banner"),
-            new Option<string>("Textlink1", "Textlink1"),
-            new Option<string>("Textlink2", "Textlink2"),
-            new Option<string>("Textlink3", "Textlink3"),
-            new Option<string>("Textlink4", "Textlink4"),
-            new Option<string>("Textlink5", "Textlink5"),
-            new Option<string>("Textlink6", "Textlink6"),
-            new Option<string>("Textlink7", "Textlink7")
-        };
-
-    IList<Option<string>> advertisingFormatOptions = AdvertisingFormatOptions();
-
 }

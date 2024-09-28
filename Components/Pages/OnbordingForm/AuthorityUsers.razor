@@ -27,6 +27,7 @@
     public EventCallback<CustomerInfo> CustomerChanged { get; set; }
 
     private string previousFullName;
+    private bool isFullNameManuallyChanged = false;
 
     protected override void OnInitialized()
     {
@@ -59,8 +60,9 @@
             if (Customer.authorityUsers.Count == 0)
             {
                 Customer.authorityUsers.Add(Customer.FullName);
+                isFullNameManuallyChanged = false;
             }
-            else if (string.IsNullOrWhiteSpace(Customer.authorityUsers[0]))
+            else if (!isFullNameManuallyChanged)
             {
                 Customer.authorityUsers[0] = Customer.FullName;
             }
@@ -79,6 +81,10 @@
         if (index >= 0 && index < Customer.authorityUsers.Count)
         {
             Customer.authorityUsers[index] = value;
+            if (index == 0)
+            {
+                isFullNameManuallyChanged = true;
+            }
             CustomerChanged.InvokeAsync(Customer);
         }
     }
@@ -91,6 +97,7 @@
             if (Customer.authorityUsers.Count == 0)
             {
                 Customer.authorityUsers.Add(string.Empty);
+                isFullNameManuallyChanged = false;
             }
             CustomerChanged.InvokeAsync(Customer);
         }
