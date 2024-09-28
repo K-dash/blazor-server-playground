@@ -1,17 +1,17 @@
-<RadzenFieldset Text="お客様情報">
+<RadzenFieldset Text="お客様情報" AllowCollapse=true>
     <RadzenStack Gap="2rem" class="rz-p-4 rz-p-md-4">
         <RadzenRow AlignItems="AlignItems.Center" RowGap="2rem" Gap="1rem">
-            <RadzenColumn Size="12" SizeMD="10" Offset="1" OffsetMD="1">
+            <RadzenColumn Size="0" SizeMD="0">
                 <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">会社名</RadzenText>
                 <RadzenTextBox Name="CompanyName" @bind-Value="@Customer.CompanyName" Class="w-100" />
                 <ValidationMessage For="@(() => Customer.CompanyName)" />
             </RadzenColumn>
-            <RadzenColumn Size="12" SizeMD="10" Offset="1" OffsetMD="1">
+            <RadzenColumn Size="0" SizeMD="0">
                 <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">担当者名</RadzenText>
                 <RadzenTextBox ame="FullName" @bind-Value="@Customer.FullName" Class="w-100" />
                 <ValidationMessage For="@(() => Customer.FullName)" />
             </RadzenColumn>
-            <RadzenColumn Size="12" SizeMD="10" Offset="1" OffsetMD="1">
+            <RadzenColumn Size="0" SizeMD="0">
                 <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">メールアドレス</RadzenText>
                 <RadzenTextBox ame="EmailAddress" @bind-Value="@Customer.EmailAddress" Class="w-100" />
                 <ValidationMessage For="@(() => Customer.EmailAddress)" />
@@ -20,31 +20,34 @@
     </RadzenStack>
 </RadzenFieldset>
 <br/>
-<RadzenFieldset Text="ご契約内容">
+<RadzenFieldset Text="ご契約内容" AllowCollapse=true>
     <RadzenStack Gap="2rem" class="rz-p-4 rz-p-md-4">
         <RadzenRow AlignItems="AlignItems.Center" RowGap="2rem" Gap="1rem">
-            <RadzenColumn Size="12" SizeMD="10" Offset="1" OffsetMD="1">
+            <RadzenColumn Size="0" SizeMD="0">
                 <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">利用人数</RadzenText>
                 <RadzenTextBox Name="NumberOfUsers" @bind-Value="@Customer.NumberOfUsers" Class="w-100" />
                 <ValidationMessage For="@(() => Customer.NumberOfUsers)" />
             </RadzenColumn>
-            <RadzenColumn Size="12" SizeMD="10" Offset="1" OffsetMD="1">
+            <RadzenColumn Size="0" SizeMD="0">
                 <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">プラン</RadzenText>
                 <RadzenDropDown @bind-Value="@Customer.Plan" TValue="string" Data="@PlanOptions" Class="w-100" />
                 <ValidationMessage For="@(() => Customer.Plan)" />
             </RadzenColumn>
-            <RadzenColumn Size="12" SizeMD="10" Offset="1" OffsetMD="1">
+            <RadzenColumn Size="0" SizeMD="0">
                 <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">利用開始日</RadzenText>
                 <RadzenDatePicker @bind-Value="@Customer.StartDate" Class="w-100" DateFormat="yyyy/MM/dd" />
                 <ValidationMessage For="@(() => Customer.StartDate)" />
             </RadzenColumn>
-            <RadzenColumn Size="12" SizeMD="10" Offset="1" OffsetMD="1">
+            <RadzenColumn Size="0" SizeMD="0">
                 <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">利用終了日</RadzenText>
                 <RadzenDatePicker @bind-Value="@Customer.EndDate" Class="w-100" DateFormat="yyyy/MM/dd" />
                 <ValidationMessage For="@(() => Customer.EndDate)" />
             </RadzenColumn>
-            <RadzenColumn Size="12" SizeMD="10" Offset="1" OffsetMD="1">
+            <RadzenColumn Size="0" SizeMD="0">
                 <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">てすと</RadzenText>
+                    <RadzenText TextStyle="TextStyle.Body2" TextAlign="TextAlign.Left" style="color: var(--rz-text-tertiary-color)">
+                        ※1時間単位での設定となります。（AM5:30などは不可）
+                    </RadzenText>
                 <RadzenDropDown TextProperty="Text" ValueProperty="Value" Chips=true
                                 Multiple="true" class="w-100" AllowClear="true"
                                 AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"

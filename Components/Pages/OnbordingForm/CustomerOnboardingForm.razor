@@ -1,12 +1,14 @@
 @page "/form"
 @using System
 @inject NotificationService NotificationService
+@inject DialogService DialogService
 
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <h1 class="text-center mb-4">顧客オンボーディングフォーム</h1>
-
+        <RadzenCard class="rz-my-12 rz-mx-auto" Variant="Variant.Flat" Style="max-width: 1000px;">
+            <RadzenText TextStyle="TextStyle.H5" TagName="TagName.H1" TextAlign="TextAlign.Center">申込みフォーム</RadzenText>
+            <br/>
             <RadzenTemplateForm TItem="CustomerInfo" Data=@customer Submit=@SaveCustomerInfo InvalidSubmit=@OnInvalidSubmit>
             <DataAnnotationsValidator />
             <RadzenAccordion>
@@ -35,6 +37,7 @@
             {
                 <CustomerSummary Customer="@customer" />
             }
+        </RadzenCard>
         </div>
     </div>
 </div>
@@ -43,14 +46,23 @@
     private CustomerInfo customer = new CustomerInfo();
     private bool showSummary = false;
 
-    private void SaveCustomerInfo()
+    protected async Task SaveCustomerInfo()
     {
-        // ここで顧客情報を保存する処理を実装します
-        // 例: データベースへの保存、API呼び出しなど
-        showSummary = true;
-        // 保存成功のメッセージを表示するなどの処理を追加できます
-        NotificationService.Notify(NotificationSeverity.Info, "成功", "登録が完了しました");
+        var confirmResult = await DialogService.Confirm("入力内容を保存しますか？", "確認", new ConfirmOptions()
+        {
+            OkButtonText = "はい",
+            CancelButtonText = "いいえ",
+        });
+        if (confirmResult.HasValue && confirmResult.Value)
+        {
+            // ここで顧客情報を保存する処理を実装します
+            // 例: データベースへの保存、API呼び出しなど
+            showSummary = true;
+            // 保存成功のメッセージを表示するなどの処理を追加できます
+            NotificationService.Notify(NotificationSeverity.Info, "成功", "登録が完了しました");
+        }
     }
+
     void OnInvalidSubmit(FormInvalidSubmitEventArgs args)
     {
         foreach (var error in args.Errors) {
