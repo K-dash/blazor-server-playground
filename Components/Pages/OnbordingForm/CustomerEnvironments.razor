@@ -23,12 +23,12 @@
             </RadzenColumn>
             <RadzenColumn Size="12" SizeMD="10" Offset="1" OffsetMD="1">
                 <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">利用開始日</RadzenText>
-                <RadzenDatePicker @bind-Value="@Customer.StartDate" Class="w-100" DateFormat="yyyy/MM/dd" />
+                <RadzenDatePicker @bind-Value="@Customer.StartDate" DateFormat="yyyy/MM/dd" />
                 <ValidationMessage For="@(() => Customer.StartDate)" />
             </RadzenColumn>
             <RadzenColumn Size="12" SizeMD="10" Offset="1" OffsetMD="1">
                 <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">利用終了日</RadzenText>
-                <RadzenDatePicker @bind-Value="@Customer.EndDate" Class="w-100" DateFormat="yyyy/MM/dd" />
+                <RadzenDatePicker @bind-Value="@Customer.EndDate" DateFormat="yyyy/MM/dd" />
                 <ValidationMessage For="@(() => Customer.EndDate)" />
             </RadzenColumn>
         </RadzenRow>

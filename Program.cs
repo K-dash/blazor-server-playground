@@ -2,6 +2,7 @@ using blazor_playground.Components;
 using blazor_playground.Data;
 using Microsoft.EntityFrameworkCore;
 using Radzen;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,10 @@ builder.Services.AddDbContextFactory<PubsDbContext>(opt => {
         }
     );
 });
+
+builder.Services.AddLocalization();
+CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("ja-JP");
+CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("ja-JP");
 
 var app = builder.Build();
 
