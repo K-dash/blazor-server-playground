@@ -21,7 +21,7 @@
                         <RadzenTextBox
                             Value="@Customer.authorityUsers[index]"
                             ValueChanged="@(value => UpdateUser(index, value))"
-                            Placeholder="権限ユーザのフルネームを入力" Class="w-100">
+                            Placeholder="権限ユーザのフルネームを入力" Style="width: 100%;">
                         </RadzenTextBox>
                     </RadzenColumn>
                     <RadzenButton Style="background-color: #ff4d4d; color: white;" Icon="delete" Click="@(() => RemoveUser(index))" />

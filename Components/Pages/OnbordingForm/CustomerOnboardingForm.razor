@@ -3,15 +3,13 @@
 @inject NotificationService NotificationService
 @inject DialogService DialogService
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-        <RadzenCard class="rz-my-12 rz-mx-auto" Variant="Variant.Flat" Style="max-width: 1000px;">
-            <RadzenText TextStyle="TextStyle.H5" TagName="TagName.H1" TextAlign="TextAlign.Center">申込みフォーム</RadzenText>
-            <br/>
-            <RadzenTemplateForm TItem="CustomerInfo" Data=@customer Submit=@SaveCustomerInfo InvalidSubmit=@OnInvalidSubmit>
+<RadzenRow JustifyContent="JustifyContent.Center" AlignItems="AlignItems.Center" Gap="0">
+    <RadzenColumn SizeMD="8">
+        <RadzenText TextStyle="TextStyle.H5" TagName="TagName.H1" TextAlign="TextAlign.Center">申込みフォーム</RadzenText>
+        <br/>
+        <RadzenTemplateForm TItem="CustomerInfo" Data=@customer Submit=@SaveCustomerInfo InvalidSubmit=@OnInvalidSubmit>
             <DataAnnotationsValidator />
-            <RadzenAccordion>
+            <RadzenAccordion Multiple="true">
                 <Items>
                     <RadzenAccordionItem Text="基本情報" Icon="business" Selected="true">
                         <BasicInfo @bind-Customer="customer" />
@@ -26,21 +24,18 @@
                     </RadzenAccordionItem>
                 </Items>
             </RadzenAccordion>
-
-            <div class="d-flex justify-content-center mt-4">
+            <br/>
+            <RadzenRow JustifyContent="JustifyContent.Center" AlignItems="AlignItems.Center" Gap="0">
                 <RadzenButton Text="保存" ButtonType="ButtonType.Submit" Style="background-color: #337AB7; color: white;"></RadzenButton>
-            </div>
-            </RadzenTemplateForm>
+            </RadzenRow>
+        </RadzenTemplateForm>
 
-
-            @if (showSummary)
-            {
-                <CustomerSummary Customer="@customer" />
-            }
-        </RadzenCard>
-        </div>
-    </div>
-</div>
+        @if (showSummary)
+        {
+            <CustomerSummary Customer="@customer" />
+        }
+    </RadzenColumn>
+</RadzenRow>
 
 @code {
     private CustomerInfo customer = new CustomerInfo();
@@ -91,7 +86,8 @@
     .rz-button {
         border-radius: 20px;
     }
-    .rz-textbox, .rz-numeric-text, .rz-datepicker {
+    .rz-textbox, .rz-numeric-text, .rz-datepicker, .rz-dropdown {
         border-radius: 5px;
     }
+
 </style>
