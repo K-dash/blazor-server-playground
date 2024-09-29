@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
+[CustomValidation(typeof(CustomerInfo), "validationDate")]
 public class CustomerInfo
 {
     [Display(Name = "会社名")]
@@ -37,4 +38,15 @@ public class CustomerInfo
     [Display(Name = "広告形式")]
     [Required(ErrorMessage = "選択してください")]
     public List<string> AdvertisingFormats { get; set; }
+    
+    // フォームレベルでの単体入力チェック項目に対するバリデーションロジックを実装
+    public static ValidationResult? validationDate(CustomerInfo ci, ValidationContext ctx)
+    {
+        if (ci.StartDate > ci.EndDate) {
+            return new ValidationResult("利用終了日は利用開始日よりも後の日付を指定してください", new List<string>() {
+                "StartDate", "EndDate"
+            });
+        }
+        return ValidationResult.Success;
+    }
 }

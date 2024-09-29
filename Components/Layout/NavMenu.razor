@@ -5,25 +5,23 @@
     </RadzenStack>
 </RadzenHeader>
 
-<RadzenStack Orientation="Orientation.Horizontal" Wrap="FlexWrap.Wrap">
-    <RadzenSidebar @bind-Expanded="@sidebarExpanded">
-        <RadzenPanelMenu>
-            <RadzenPanelMenuItem Text="Home" Icon="home" Path="" />
-            <RadzenPanelMenuItem Text="Counter" Icon="add_box" Path="counter" />
-            <RadzenPanelMenuItem Text="Weather" Icon="list" Path="weather" />
-            <RadzenPanelMenuItem Text="BizA" Icon="list" Path="biza/editauthor/123" />
-            <RadzenPanelMenuItem Text="Sample01" Icon="list" Path="Sample01" />
-            <RadzenPanelMenuItem Text="Form" Icon="list" Path="form" />
-        </RadzenPanelMenu>
-    </RadzenSidebar>
-</RadzenStack>
+<RadzenSidebar @bind-Expanded="@sidebarExpanded">
+    <RadzenPanelMenu>
+        <RadzenPanelMenuItem Text="Home" Icon="home" Path="" />
+        <RadzenPanelMenuItem Text="Counter" Icon="add_box" Path="counter" />
+        <RadzenPanelMenuItem Text="Weather" Icon="list" Path="weather" />
+        <RadzenPanelMenuItem Text="BizA" Icon="list" Path="biza/editauthor/123" />
+        <RadzenPanelMenuItem Text="Sample01" Icon="list" Path="Sample01" />
+        <RadzenPanelMenuItem Text="申込みフォーム" Icon="assignment" Path="form" />
+    </RadzenPanelMenu>
+</RadzenSidebar>
 
 
 @code {
     bool sidebarExpanded = true;
 }
 
-@* <style>
+<style>
     .panel-menu {
         background-color: red;
     }
@@ -31,4 +29,4 @@
     .panel-menu .navigation-menu .navigation-item-wrapper {
         background-color: red;
     }
-</style> *@
+</style>
